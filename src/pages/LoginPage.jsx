@@ -33,6 +33,13 @@ const LoginPage = () => {
             <h1 className="h4 mb-0 text-center">Login to your account</h1>
           </CardHeader>
           <CardContent>
+            <div className="alert alert-info mb-3">
+              <small>
+                Demo credentials: <br />
+                Email: <strong>admin@example.com</strong><br />
+                Password: <strong>admin123</strong>
+              </small>
+            </div>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -44,6 +51,7 @@ const LoginPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
+                  placeholder="admin@example.com"
                 />
               </div>
               <div className="mb-3">
@@ -55,6 +63,7 @@ const LoginPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
+                  placeholder="admin123"
                 />
               </div>
               <div className="d-grid">
