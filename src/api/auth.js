@@ -1,37 +1,39 @@
-import { apiFetch } from './client';
+import { authFetch, apiFetch, setToken, clearToken } from './client';
 
-/**
- * @param {Record<string, string>} credentials 
- * @returns {Promise<import('../types').AuthResponse>}
- */
-export const login = async (credentials) => {
-    return apiFetch('/login', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-    });
-};
+export async function login(email, password) {
+  const data = await authFetch('/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password })
+  });
 
-/**
- * @param {Record<string, string>} userData
- * @returns {Promise<import('../types').AuthResponse>}
- */
-export const register = async (userData) => {
-    return apiFetch('/register', {
-        method: 'POST',
-        body: JSON.stringify(userData),
-    });
-};
+  const token = data?.token || data?.access_token || (data?.data && data.data.token);
+  if (!token) {
+    throw new Error('No token in response');
+  }
 
-/**
- * @returns {Promise<void>}
- */
-export const logout = async () => {
-    return apiFetch('/logout', { method: 'POST' });
-};
+  setToken(token);
+  return token;
+}
 
-/**
- * @returns {Promise<{user: import('../types').User}>}
- */
-export const getAuthenticatedUser = async () => {
-    return apiFetch('/user');
-};
+export function getAuthenticatedUser() {
+  return apiFetch('/user');
+}
+
+export function logout() {
+  clearToken();
+  return apiFetch('/logout', { method: 'POST' });
+}
+
+export async function register(email, password) {
+  const data = await authFetch('/register', {
+    method: 'POST',
+    body: JSON.stringify({ email, password })
+  });
+
+  // Si el registro retorna un token directamente, lo guardamos
+  const token = data?.token || data?.access_token || (data?.data && data.data.token);
+  if (token) {
+    setToken(token);
+  }
+  return data;
+}
