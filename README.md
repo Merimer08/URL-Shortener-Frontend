@@ -3,9 +3,30 @@
 Frontend en **React + Vite** para el proyecto **URL Shortener PRO**.  
 Sirve como panel de administración y visualización de estadísticas de los enlaces acortados.
 
+[![Demo en Railway](https://img.shields.io/badge/🚀_Demo-Railway-blueviolet?logo=railway)](https://url-shortener-frontend.up.railway.app/)
+
+---
+
+## 🖼️ Demo
+
+🔗 [**Ver aplicación en producción**](https://url-shortener-frontend.up.railway.app/)
+
+*(El frontend está desplegado en Railway y conectado con la API de Laravel)*  
+
+---
+
+## 📸 Capturas de pantalla
+
+<!-- Inserta aquí las imágenes -->
+<p align="center">
+  <img src="docs/screenshot1.png" alt="Dashboard" width="400"/>
+  <img src="docs/screenshot2.png" alt="Gestión de enlaces" width="400"/>
+</p>
+
 ---
 
 ## 🚀 Tecnologías
+
 - [React 19](https://react.dev/)
 - [Vite 6](https://vitejs.dev/)
 - [React Router DOM 7](https://reactrouter.com/)
@@ -44,13 +65,16 @@ VITE_API_URL=http://localhost:8000/api/v1
 
 En Railway, define la misma variable en **Settings → Variables**:
 
-- `VITE_API_URL=https://tu-backend.up.railway.app/api/v1`
+```env
+VITE_API_URL=https://tu-backend.up.railway.app/api/v1
+```
 
 ---
 
 ## ☁️ Deploy en Railway
 
 ### Opción 1: Node + Serve (recomendada)
+
 1. Instalar dependencias:
    ```bash
    npm install
@@ -67,6 +91,7 @@ En Railway, define la misma variable en **Settings → Variables**:
    Esto asegura fallback SPA (`react-router-dom`) y puerto dinámico.
 
 ### Opción 2: Static Site
+
 1. Crear servicio **Static** en Railway.
 2. Configurar:
    - **Build command:** `npm ci && npm run build`
@@ -100,9 +125,10 @@ Opciones:
 
 ```
 src/
- ├── assets/        # Estilos, imágenes
- ├── components/    # Componentes UI
- ├── pages/         # Vistas React Router
+ ├── api/          # llamadas al backend
+ ├── auth/         # contexto y hooks de autenticación
+ ├── components/   # componentes UI
+ ├── pages/        # vistas con React Router
  ├── App.jsx
  └── main.jsx
 ```
@@ -110,11 +136,21 @@ src/
 ---
 
 ## ✅ Checklist antes de deploy
+
 - [ ] `npm run build` genera correctamente `dist/`
 - [ ] Variable `VITE_API_URL` definida en Railway
 - [ ] Railway usa `npm start` o servicio estático con SPA fallback
+- [ ] Capturas añadidas en `docs/screenshot1.png` y `docs/screenshot2.png`
+
+---
+
+## 🔗 Repos relacionados
+
+- **Backend/API (Laravel + Sanctum + PostgreSQL):**  
+  👉 [URL-Shortener-Pro](https://github.com/Merimer08/URL-Shortener-Pro)
 
 ---
 
 ## 📄 Licencia
+
 MIT
