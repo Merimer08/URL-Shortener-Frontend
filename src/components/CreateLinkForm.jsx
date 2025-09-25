@@ -54,7 +54,7 @@ const CreateLinkForm = ({ onLinkCreated, addToast }) => {
   return (
     <Card className="mb-4">
       <CardHeader>
-        <h2 className="h5 mb-0">Create a new short link</h2>
+        <h2 className="h5 mb-0">Crea un nuevo short link</h2>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ const CreateLinkForm = ({ onLinkCreated, addToast }) => {
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="expires_at" className="form-label">Expires At (Optional)</label>
+              <label htmlFor="expires_at" className="form-label">Finalización (Opcional)</label>
               <Input
                 id="expires_at"
                 type="datetime-local"
@@ -80,7 +80,7 @@ const CreateLinkForm = ({ onLinkCreated, addToast }) => {
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="max_clicks" className="form-label">Max Clicks (Optional)</label>
+              <label htmlFor="max_clicks" className="form-label">Max Clicks (Opcional)</label>
               <Input
                 id="max_clicks"
                 type="number"
@@ -91,7 +91,7 @@ const CreateLinkForm = ({ onLinkCreated, addToast }) => {
               />
             </div>
             <div className="col-12">
-              <label htmlFor="notes" className="form-label">Notes (Optional)</label>
+              <label htmlFor="notes" className="form-label">Notas (Opcinal)</label>
               <Input
                 id="notes"
                 type="text"

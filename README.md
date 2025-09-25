@@ -11,7 +11,7 @@ Sirve como panel de administración y visualización de estadísticas de los enl
 
 🔗 [**Ver aplicación en producción**](https://url-shortener-frontend.up.railway.app/)
 
-*(El frontend está desplegado en Railway y conectado con la API de Laravel)*  
+_(El frontend está desplegado en Railway y conectado con la API de Laravel)_
 
 ---
 
@@ -19,8 +19,13 @@ Sirve como panel de administración y visualización de estadísticas de los enl
 
 <!-- Inserta aquí las imágenes -->
 <p align="center">
-  <img src="docs/screenshot1.png" alt="Dashboard" width="400"/>
-  <img src="docs/screenshot2.png" alt="Gestión de enlaces" width="400"/>
+<h3>Login</h3>
+<img src="public/img/login.png" alt="logim" width="400"/>
+<h3>Dashboard</h3>
+  <img src="public/img/dasboard.png" alt="Dashboard" width="400"/>
+  <h3>Ventana modal </h3>
+  <img src="public/img/info.png" alt="Gestión de enlaces y info" width="400"/>
+   
 </p>
 
 ---
@@ -104,6 +109,7 @@ VITE_API_URL=https://tu-backend.up.railway.app/api/v1
 
 El build puede mostrar avisos de chunks grandes (>500kb).  
 Opciones:
+
 - Carga diferida con `import()`.
 - Dividir vendors en `vite.config.ts`:
   ```ts
