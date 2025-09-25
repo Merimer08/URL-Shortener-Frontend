@@ -11,14 +11,23 @@ const AboutModal = () => (
     <div className="modal-dialog modal-lg modal-dialog-centered">
       <div className="modal-content">
         <div className="modal-header">
-          <h5 className="modal-title" id="aboutModalLabel">Acerca del proyecto</h5>
-          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <h5 className="modal-title" id="aboutModalLabel">
+            Acerca del proyecto
+          </h5>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
         </div>
 
         <div className="modal-body">
           <p className="mb-3">
-            Esta aplicación (frontend React + API Laravel) permite <strong>acortar enlaces</strong>, 
-            <strong>ver estadísticas de clics</strong> y <strong>definir reglas de expiración</strong> por fecha o por número de usos.
+            Esta aplicación (frontend React + API Laravel) permite{" "}
+            <strong>acortar enlaces</strong>, 
+            <strong>ver estadísticas de clics</strong> y{" "}
+            <strong>definir reglas de expiración</strong> por fecha o por número de usos.
           </p>
 
           <h6 className="mt-3">Objetivo del proyecto</h6>
@@ -48,22 +57,21 @@ const AboutModal = () => (
             <li>Las URLs originales deben empezar por <code>http://</code> o <code>https://</code>.</li>
           </ul>
 
-          <div className="mt-3">
+          {/* 🔥 Botones en la misma línea */}
+          <div className="d-flex justify-content-between mt-4">
             <a
               href="https://github.com/Merimer08/URL-Shortener-Pro"
               target="_blank"
               rel="noreferrer"
-              className="btn btn-outline-secondary btn-sm"
+              className="btn btn-outline-secondary w-50 me-2"
             >
               Ver repositorio de la API (Laravel)
             </a>
-          </div>
-             <div className="mt-3">
             <a
               href="https://github.com/Merimer08/URL-Shortener-Frontend"
               target="_blank"
               rel="noreferrer"
-              className="btn btn-outline-success btn-sm"
+              className="btn btn-outline-success w-50 ms-2"
             >
               Ver repositorio del Front (React + JavaScript)
             </a>
@@ -71,7 +79,11 @@ const AboutModal = () => (
         </div>
 
         <div className="modal-footer">
-          <button type="button" className="btn btn-primary" data-bs-dismiss="modal">
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
             Entendido
           </button>
         </div>
