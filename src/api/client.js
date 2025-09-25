@@ -1,61 +1,49 @@
-const RAW_BASE = import.meta.env.VITE_API_BASE_URL || 'https://url-shortener-pro.up.railway.app/api';
-const VERSION = import.meta.env.VITE_API_VERSION || 'v1';
+// src/api/client.js
+export const API = 'https://url-shortener-pro.up.railway.app';
 
-const AUTH_BASE = RAW_BASE;
-const API_BASE = `${RAW_BASE}/${VERSION}`;
-
-function getToken() {
-  return localStorage.getItem('authToken');
-}
+let _token = localStorage.getItem('authToken') || null;
 
 export function setToken(t) {
-  localStorage.setItem('authToken', t);
+  _token = t || null;
+  if (_token) localStorage.setItem('authToken', _token);
+  else localStorage.removeItem('authToken');
 }
 
-export function clearToken() {
-  localStorage.removeItem('authToken');
+export function getToken() {
+  return _token;
 }
 
-async function baseFetch(base, path, options = {}, sendAuth = false) {
-  console.log('AUTH CALL ->', base + path);
-  
-  const headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    ...(options.headers || {})
+export async function apiFetch(path, { method = 'GET', headers = {}, body, ...rest } = {}) {
+  const opts = {
+    method,
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      ...headers,
+    },
+    ...rest,
   };
 
-  if (sendAuth) {
-    const token = getToken();
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
+  if (getToken()) {
+    opts.headers['Authorization'] = `Bearer ${getToken()}`;
   }
 
-  const res = await fetch(`${base}${path}`, { ...options, headers });
-  
-  if (!res.ok) {
-    let msg = 'Request failed';
-    try {
-      const j = await res.json();
-      msg = j.message || msg;
-      if (j.errors) {
-        msg = Object.values(j.errors).flat().join(' ');
-      }
-    } catch (e) {
-      console.error('Error parsing error response:', e);
-    }
-    throw new Error(msg);
+  if (body && !(body instanceof FormData)) {
+    opts.headers['Content-Type'] = opts.headers['Content-Type'] || 'application/json';
+    if (typeof body !== 'string') body = JSON.stringify(body);
+    opts.body = body;
+  } else if (body instanceof FormData) {
+    opts.body = body;
   }
-  
+
+  const res = await fetch(API + path, opts);
+  const text = await res.text();
   const ct = res.headers.get('content-type') || '';
-  return ct.includes('application/json') ? res.json() : undefined;
-}
+  const data = ct.includes('application/json') ? (text ? JSON.parse(text) : null) : text;
 
-export function authFetch(path, options = {}) {
-  return baseFetch(AUTH_BASE, path, options, false);
-}
-
-export function apiFetch(path, options = {}) {
-  return baseFetch(API_BASE, path, options, true);
+  if (!res.ok) {
+    const msg = typeof data === 'string' ? data : JSON.stringify(data);
+    throw new Error(`${res.status} ${msg}`);
+  }
+  return data;
 }

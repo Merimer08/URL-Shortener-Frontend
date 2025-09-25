@@ -1,39 +1,30 @@
-import { authFetch, apiFetch, setToken, clearToken } from './client';
+// src/api/auth.js
+import { apiFetch, setToken } from './client';
+
+export async function getAuthenticatedUser() {
+  return apiFetch('/api/v1/user'); // requiere Authorization: Bearer
+}
 
 export async function login(email, password) {
-  const data = await authFetch('/login', {
+  const { token, user } = await apiFetch('/api/login', {
     method: 'POST',
-    body: JSON.stringify({ email, password })
+    body: { email, password },
   });
-
-  const token = data?.token || data?.access_token || (data?.data && data.data.token);
-  if (!token) {
-    throw new Error('No token in response');
-  }
-
   setToken(token);
-  return token;
+  return user;
 }
 
-export function getAuthenticatedUser() {
-  return apiFetch('/user');
-}
-
-export function logout() {
-  clearToken();
-  return apiFetch('/logout', { method: 'POST' });
-}
-
-export async function register(email, password) {
-  const data = await authFetch('/register', {
-    method: 'POST',
-    body: JSON.stringify({ email, password })
-  });
-
-  // Si el registro retorna un token directamente, lo guardamos
-  const token = data?.token || data?.access_token || (data?.data && data.data.token);
-  if (token) {
-    setToken(token);
+export async function logout() {
+  try {
+    await apiFetch('/api/logout', { method: 'POST' });
+  } finally {
+    setToken(null);
   }
-  return data;
+}
+
+export async function register({ name, email, password, password_confirmation }) {
+  return apiFetch('/api/register', {
+    method: 'POST',
+    body: { name, email, password, password_confirmation },
+  });
 }

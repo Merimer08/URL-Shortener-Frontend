@@ -1,25 +1,13 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from './useAuth';
-import { Spinner } from '../components/ui';
+// src/auth/ProtectedRoute.jsx
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./useAuth";
 
-const ProtectedRoute = ({ children }) => {
-  const { token, isLoading } = useAuth();
-  const location = useLocation();
+export default function ProtectedRoute({ children }) {
+  const { user, isLoading } = useAuth();
 
-  if (isLoading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-        <Spinner style={{ width: '3rem', height: '3rem' }} />
-      </div>
-    );
-  }
+  if (isLoading) return <div className="text-center p-4">Cargando…</div>;
+  if (!user) return <Navigate to="/login" replace />;
 
-  if (!token) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  return <>{children}</>;
-};
-
-export default ProtectedRoute;
+  return children;
+}
